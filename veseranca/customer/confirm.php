@@ -107,15 +107,9 @@ $amount = $_POST['amount_sent'];
 
 $payment_mode = $_POST['payment_mode'];
 
-$ref_no = $_POST['ref_no'];
-
-$code = $_POST['code'];
-
-$payment_date = $_POST['date'];
-
 $complete = "Complete";
 
-$insert_payment = "insert into payments (invoice_no,amount,payment_mode,ref_no,code,payment_date) values ('$invoice_no','$amount','$payment_mode','$ref_no','$code','$payment_date')";
+$insert_payment = "insert into payments (invoice_no,amount,payment_mode) values ('$invoice_no','$amount','$payment_mode')";
 
 $run_payment = mysqli_query($con,$insert_payment);
 

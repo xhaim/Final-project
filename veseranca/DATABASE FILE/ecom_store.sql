@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 02:25 PM
+-- Generation Time: Apr 18, 2024 at 03:28 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -209,6 +209,14 @@ CREATE TABLE `customer_orders` (
   `product_img1` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data for table `customer_orders`
+--
+
+INSERT INTO `customer_orders` (`order_id`, `customer_id`, `due_amount`, `invoice_no`, `qty`, `size`, `order_date`, `order_status`, `product_title`, `product_img1`) VALUES
+(79, 25, 1512, 18071346, 4, 'L', '2024-04-18 13:17:17', 'Complete', 'Hollow Out Cover Up Dress Without Bikini', 'Hollow Out Cover Up Dress Without Bikini.jpg'),
+(80, 25, 1894, 18071346, 2, 'L', '2024-04-18 13:17:26', 'Complete', 'Solid Halter Bikini Two Pieces Swimsuit ', 'Solid Halter Bikini Two Pieces Swimsuit - Blue _ XL.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -264,11 +272,23 @@ CREATE TABLE `payments` (
   `payment_id` int(10) NOT NULL,
   `invoice_no` int(10) DEFAULT NULL,
   `amount` int(10) NOT NULL,
-  `payment_mode` text NOT NULL,
-  `ref_no` int(10) DEFAULT NULL,
-  `code` int(10) DEFAULT NULL,
-  `payment_date` text DEFAULT NULL
+  `payment_mode` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`payment_id`, `invoice_no`, `amount`, `payment_mode`) VALUES
+(58, 0, 2841, 'BDO Unibank Inc.'),
+(59, 0, 1512, 'Maya'),
+(60, 0, 1894, 'BDO Unibank Inc.'),
+(61, 0, 1894, 'Maya'),
+(62, 0, 1512, 'Metropolitan Bank and Trust Company'),
+(63, 0, 1512, 'BDO Unibank Inc.'),
+(64, 0, 1894, 'BDO Unibank Inc.'),
+(65, 0, 0, 'Maya'),
+(66, 0, 1512, 'Maya');
 
 -- --------------------------------------------------------
 
@@ -287,6 +307,14 @@ CREATE TABLE `pending_orders` (
   `product_title` text NOT NULL,
   `product_img1` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `pending_orders`
+--
+
+INSERT INTO `pending_orders` (`order_id`, `customer_id`, `invoice_no`, `product_id`, `qty`, `size`, `order_status`, `product_title`, `product_img1`) VALUES
+(86, 25, 18071346, '12', 4, 'L', 'Complete', 'Hollow Out Cover Up Dress Without Bikini', 'Hollow Out Cover Up Dress Without Bikini.jpg'),
+(87, 25, 18071346, '13', 2, 'L', 'pending', 'Solid Halter Bikini Two Pieces Swimsuit ', 'Solid Halter Bikini Two Pieces Swimsuit - Blue _ XL.jpg');
 
 -- --------------------------------------------------------
 
@@ -580,7 +608,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_orders`
 --
 ALTER TABLE `customer_orders`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `enquiry_types`
@@ -598,13 +626,13 @@ ALTER TABLE `manufacturers`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `pending_orders`
 --
 ALTER TABLE `pending_orders`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `products`
