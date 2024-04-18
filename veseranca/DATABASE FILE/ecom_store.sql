@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 01:57 PM
+-- Generation Time: Apr 18, 2024 at 02:25 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -183,6 +183,13 @@ CREATE TABLE `customers` (
   `customer_confirm_code` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`customer_id`, `customer_name`, `customer_email`, `customer_pass`, `customer_region`, `customer_province`, `customer_city`, `customer_barangay`, `customer_street`, `customer_contact`, `customer_address`, `customer_image`, `customer_ip`, `customer_confirm_code`) VALUES
+(25, 'Vea Mae Biloy', 'vellacanine@gmail.com', 'veamae123', 'Region VII (Central Visayas)', 'Bohol', 'Loboc', 'Oy', 'Boundary Sikatuna ug Loboc', '09651453262', 'Boundary Sikatuna ug Loboc, Oy, Loboc, Bohol, Region VII (Central Visayas)', 'IMG_5820.JPG', '::1', '');
+
 -- --------------------------------------------------------
 
 --
@@ -201,15 +208,6 @@ CREATE TABLE `customer_orders` (
   `product_title` text NOT NULL,
   `product_img1` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `customer_orders`
---
-
-INSERT INTO `customer_orders` (`order_id`, `customer_id`, `due_amount`, `invoice_no`, `qty`, `size`, `order_date`, `order_status`, `product_title`, `product_img1`) VALUES
-(74, 8, 1890, 1676139577, 5, 'M', '2024-04-14 09:58:22', 'Complete', 'Hollow Out Cover Up Dress Without Bikini', 'Hollow Out Cover Up Dress Without Bikini.jpg'),
-(75, 24, 2637, 751753331, 3, 'S', '2024-04-15 16:02:35', 'Complete', 'Color Block Zipper Front One Piece Swimsuit', 'Color Block Zipper Front One Piece Swimsuit.jpg'),
-(76, 24, 1134, 751753331, 3, 'S', '2024-04-15 16:02:43', 'Complete', 'Hollow Out Cover Up Dress Without Bikini', 'Hollow Out Cover Up Dress Without Bikini.jpg');
 
 -- --------------------------------------------------------
 
@@ -417,7 +415,8 @@ INSERT INTO `wishlist` (`wishlist_id`, `customer_id`, `product_id`) VALUES
 (3, 5, 13),
 (4, 3, 13),
 (5, 6, 15),
-(6, 8, 13);
+(6, 8, 13),
+(7, 25, 13);
 
 --
 -- Indexes for dumped tables
@@ -575,13 +574,13 @@ ALTER TABLE `coupons`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `customer_orders`
 --
 ALTER TABLE `customer_orders`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `enquiry_types`
@@ -599,13 +598,13 @@ ALTER TABLE `manufacturers`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `pending_orders`
 --
 ALTER TABLE `pending_orders`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -635,7 +634,7 @@ ALTER TABLE `terms`
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `wishlist_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `wishlist_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
