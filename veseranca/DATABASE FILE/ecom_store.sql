@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2024 at 07:47 AM
+-- Generation Time: Apr 18, 2024 at 01:57 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -171,7 +171,7 @@ CREATE TABLE `customers` (
   `customer_name` varchar(255) NOT NULL,
   `customer_email` varchar(255) NOT NULL,
   `customer_pass` varchar(255) NOT NULL,
-  `customer_region` text DEFAULT NULL,
+  `customer_region` text NOT NULL,
   `customer_province` text NOT NULL,
   `customer_city` text NOT NULL,
   `customer_barangay` text NOT NULL,
@@ -182,15 +182,6 @@ CREATE TABLE `customers` (
   `customer_ip` varchar(255) NOT NULL,
   `customer_confirm_code` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`customer_id`, `customer_name`, `customer_email`, `customer_pass`, `customer_region`, `customer_province`, `customer_city`, `customer_barangay`, `customer_street`, `customer_contact`, `customer_address`, `customer_image`, `customer_ip`, `customer_confirm_code`) VALUES
-(8, 'Pretty Customer', 'customer@customer.com', 'prettycustomer@123', 'Philippines', 'BOHOL', '', '', NULL, '09123456789', 'Somewhere down the road', 'Gemini_Generated_Image (8).jpg', '::1', '1488769277'),
-(16, 'chaimae', 'chaimae@mail.com', '', NULL, '', '', '', NULL, '', '', '', '', ''),
-(17, 'fdsf', 'efwef', '', NULL, '', '', '', NULL, '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -206,17 +197,19 @@ CREATE TABLE `customer_orders` (
   `qty` int(10) NOT NULL,
   `size` text NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `order_status` text NOT NULL
+  `order_status` text NOT NULL,
+  `product_title` text NOT NULL,
+  `product_img1` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `customer_orders`
 --
 
-INSERT INTO `customer_orders` (`order_id`, `customer_id`, `due_amount`, `invoice_no`, `qty`, `size`, `order_date`, `order_status`) VALUES
-(35, 8, 756, 636389738, 2, 'Small', '2024-03-23 11:11:56', 'Complete'),
-(37, 8, 1758, 1355227661, 2, 'Small', '2024-03-25 11:50:52', 'Complete'),
-(38, 10, 0, 761907279, 0, 'Select a Size', '2024-03-26 09:08:39', 'Complete');
+INSERT INTO `customer_orders` (`order_id`, `customer_id`, `due_amount`, `invoice_no`, `qty`, `size`, `order_date`, `order_status`, `product_title`, `product_img1`) VALUES
+(74, 8, 1890, 1676139577, 5, 'M', '2024-04-14 09:58:22', 'Complete', 'Hollow Out Cover Up Dress Without Bikini', 'Hollow Out Cover Up Dress Without Bikini.jpg'),
+(75, 24, 2637, 751753331, 3, 'S', '2024-04-15 16:02:35', 'Complete', 'Color Block Zipper Front One Piece Swimsuit', 'Color Block Zipper Front One Piece Swimsuit.jpg'),
+(76, 24, 1134, 751753331, 3, 'S', '2024-04-15 16:02:43', 'Complete', 'Hollow Out Cover Up Dress Without Bikini', 'Hollow Out Cover Up Dress Without Bikini.jpg');
 
 -- --------------------------------------------------------
 
@@ -279,19 +272,6 @@ CREATE TABLE `payments` (
   `payment_date` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `payments`
---
-
-INSERT INTO `payments` (`payment_id`, `invoice_no`, `amount`, `payment_mode`, `ref_no`, `code`, `payment_date`) VALUES
-(26, 636389738, 756, 'UBL/Omni', 124214, 3423, '12-21-2024'),
-(27, 0, 435, 'Cash on Delivery', 0, 0, ''),
-(28, 0, 1758, 'Cash on Delivery', 0, 0, ''),
-(29, 0, 1758, 'Cash on Delivery', 0, 0, ''),
-(30, 0, 1758, 'Select Payment Mode', 0, 0, ''),
-(31, 0, 1758, 'Select Payment Mode', 0, 0, ''),
-(32, 0, 0, 'Gcash', 0, 0, '');
-
 -- --------------------------------------------------------
 
 --
@@ -305,16 +285,10 @@ CREATE TABLE `pending_orders` (
   `product_id` text NOT NULL,
   `qty` int(10) NOT NULL,
   `size` text NOT NULL,
-  `order_status` text NOT NULL
+  `order_status` text NOT NULL,
+  `product_title` text NOT NULL,
+  `product_img1` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `pending_orders`
---
-
-INSERT INTO `pending_orders` (`order_id`, `customer_id`, `invoice_no`, `product_id`, `qty`, `size`, `order_status`) VALUES
-(35, 8, 636389738, '12', 2, 'Small', 'Complete'),
-(37, 8, 1355227661, '9', 2, 'Small', 'Complete');
 
 -- --------------------------------------------------------
 
@@ -352,8 +326,7 @@ INSERT INTO `products` (`product_id`, `p_cat_id`, `cat_id`, `manufacturer_id`, `
 (9, 5, 2, 3, '2024-03-21 07:20:24', 'Color Block Zipper Front One Piece Swimsuit', 'rashguard-onepiece', 'Color Block Zipper Front One Piece Swimsuit.jpg', 'Color Block Zipper Front One Piece Swimsuit.jpg', 'Color Block Zipper Front One Piece Swimsuit.jpg', 879, 765, 'The Color Block Zipper Front One Piece Swimsuit offers a fusion of style and functionality, featuring a contemporary design highlighted by bold color-blocking and a convenient zipper front. This swimsuit exudes modern flair with its sleek silhouette and attention-grabbing color contrasts. The zipper front adds a touch of edginess while also providing adjustable coverage. Crafted from premium materials, it ensures comfort and durability for long days by the water. Whether lounging poolside or engaging in water activities, this swimsuit combines fashion-forward aesthetics with practical features, making it a versatile and chic choice for any beach or pool outing.', '\r\n\r\n\r\n\r\n\r\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,\r\n\r\n\r\n\r\n\r\n', '\r\n\r\n\r\n\r\n\r\n<iframe width=\"854\" height=\"480\" src=\"https://www.youtube.com/embed/qRswlmADRa8\" frameborder=\"0\" allowfullscreen></iframe>\r\n\r\n\r\n\r\n\r\n', 'Onepiece', 'New', 'product'),
 (12, 10, 2, 4, '2024-03-21 07:23:31', 'Hollow Out Cover Up Dress Without Bikini', 'coverup', 'Hollow Out Cover Up Dress Without Bikini.jpg', 'Hollow Out Cover Up Dress Without Bikini.jpg', 'Hollow Out Cover Up Dress Without Bikini.jpg', 378, 287, 'The Hollow Out Cover Up Dress Without Bikini is an elegant and versatile beachwear essential designed to provide both style and coverage. Crafted with intricate hollow-out detailing, this dress offers a delicate and feminine aesthetic, allowing glimpses of skin while maintaining a modest silhouette. Its lightweight and breathable fabric make it perfect for slipping on over swimwear or pairing with casual attire for a beachside lunch or stroll. The loose, flowy fit ensures comfort and ease of movement, while the absence of a bikini underneath offers a minimalist yet chic look. Whether worn over a swimsuit or as a standalone piece, this cover-up dress adds a touch of sophistication to any beach or poolside ensemble.', '\r\n\r\n\r\nComfortable and responsive, Ultraboost became our first shoe to be as popular in streetwear style as it is in performance running.\r\n', '\r\n\r\nhttps://assets.adidas.com/videos/q_auto,f_auto,g_auto/599fff35a3cf432aa9bbac7c0091316f_d98c/Ultraboost_21_Primeblue_Shoes_Blue_FX7729_video.mp4\r\n\r\n', 'cover up', 'New', 'product'),
 (13, 4, 2, 8, '2024-03-21 07:26:08', 'Solid Halter Bikini Two Pieces Swimsuit ', 'Bikini', 'Solid Halter Bikini Two Pieces Swimsuit - Blue _ XL.jpg', 'Solid Halter Bikini Two Pieces Swimsuit - Blue _ XL.jpg', 'Solid Halter Bikini Two Pieces Swimsuit - Blue _ XL.jpg', 947, 749, 'The Solid Halter Bikini Two Pieces Swimsuit is a classic and timeless swimwear option, offering a blend of simplicity and sophistication. With its halter neckline, this bikini top provides both support and style, while the solid color adds versatility to mix and match with other swim pieces. The accompanying bikini bottom features a complementary design, completing the coordinated look. Crafted from high-quality materials, this swimsuit ensures comfort and durability, whether lounging by the pool or taking a dip in the ocean. Perfect for those who prefer a sleek and understated aesthetic, this two-piece swimsuit combines minimalist elegance with practicality for a stylish beach or poolside ensemble.', '\r\n\r\n\r\n\r\nThis is a sample text. This is a sample text. This is a sample text.This is a sample text. This is a sample text. This is a sample text.This is a sample text. This is a sample text. This is a sample text.This is a sample text. This is a sample text. This is a sample text.\r\n\r\n\r\n', '\r\n\r\n\r\n\r\nThis is a sample text. This is a sample text. This is a sample text.\r\n\r\n\r\n\r\n', 'bikini black', 'New', 'product'),
-(14, 4, 2, 5, '2024-03-26 08:21:07', 'Ruffle Petal Hem Tankini Top in Black Bikini.', 'demo-product-showcase', 'Ruffle Petal Hem Tankini Top in Black Bikini.jpg', 'Ruffle Petal Hem Tankini Top in Black Bikini.jpg', 'Ruffle Petal Hem Tankini Top in Black Bikini.jpg', 584, 458, '\r\nThe Ruffle Petal Hem Tankini Top in Black Bikini exudes feminine charm and contemporary flair, combining the classic tankini silhouette with playful ruffle detailing and a sophisticated black hue. This tankini top offers both coverage and style, featuring a petal hem design that adds a touch of whimsy and movement. The ruffle accents along the neckline enhance the overall elegance of the piece, while the black color lends versatility for mixing and matching with different bottoms. Crafted from high-quality materials, this bikini top ensures comfort and support for all-day wear at the beach or pool. Whether paired with matching black bottoms or contrasting colors, this tankini top makes a chic and stylish statement for any swimwear ensemble.\r\n', '\r\n\r\n\r\n\r\n\r\nThis is a demo.\r\n\r\n\r\n', '\r\n\r\n\r\n\r\n\r\nThis is a demo.\r\n\r\n\r\n', 'Tankini ', 'New', 'product'),
-(26, 5, 2, NULL, '2024-03-26 08:31:16', 'Wrap Cross Tie Backless Halter Bodysuit', 'wrap-bodysuit', 'Wrap Cross Tie Backless Halter Bodysuit.jpg', 'Wrap Cross Tie Backless Halter Bodysuit.jpg', 'Wrap Cross Tie Backless Halter Bodysuit.jpg', 234, 23, '\r\n\r\nA Wrap Cross Tie Backless Halter Bodysuit is a stylish and versatile garment designed with a halter neck and a backless feature, featuring a wrap-around design that ties at the back. This bodysuit offers a flattering fit and a chic look, perfect for adding a touch of elegance to any outfit.\r\n', '\r\n\r\n\r\n\r\n', '\r\n\r\n\r\n\r\n', 'fg', 'New', 'product');
+(14, 4, 2, 5, '2024-04-01 02:42:29', 'Ruffle Petal Hem Tankini Top in Black Bikini.', 'demo-product-showcase', 'Ruffle Petal Hem Tankini Top in Black Bikini.jpg', 'Ruffle Petal Hem Tankini Top in Black Bikini.jpg', 'Ruffle Petal Hem Tankini Top in Black Bikini.jpg', 584, 458, '\r\n\r\n\r\nThe Ruffle Petal Hem Tankini Top in Black Bikini exudes feminine charm and contemporary flair, combining the classic tankini silhouette with playful ruffle detailing and a sophisticated black hue. This tankini top offers both coverage and style, featuring a petal hem design that adds a touch of whimsy and movement. The ruffle accents along the neckline enhance the overall elegance of the piece, while the black color lends versatility for mixing and matching with different bottoms. Crafted from high-quality materials, this bikini top ensures comfort and support for all-day wear at the beach or pool. Whether paired with matching black bottoms or contrasting colors, this tankini top makes a chic and stylish statement for any swimwear ensemble.\r\n\r\n\r\n', '\r\n\r\n\r\n\r\n\r\n\r\nThis is a demo.\r\n\r\n\r\n\r\n', '\r\n\r\n\r\n\r\n\r\n\r\nThis is a demo.\r\n\r\n\r\n\r\n', 'Tankini black', 'Sale', 'product');
 
 -- --------------------------------------------------------
 
@@ -443,7 +416,8 @@ INSERT INTO `wishlist` (`wishlist_id`, `customer_id`, `product_id`) VALUES
 (2, 2, 8),
 (3, 5, 13),
 (4, 3, 13),
-(5, 6, 15);
+(5, 6, 15),
+(6, 8, 13);
 
 --
 -- Indexes for dumped tables
@@ -601,13 +575,13 @@ ALTER TABLE `coupons`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `customer_orders`
 --
 ALTER TABLE `customer_orders`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `enquiry_types`
@@ -625,19 +599,19 @@ ALTER TABLE `manufacturers`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `pending_orders`
 --
 ALTER TABLE `pending_orders`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `product_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `product_categories`
@@ -661,7 +635,7 @@ ALTER TABLE `terms`
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `wishlist_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `wishlist_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
